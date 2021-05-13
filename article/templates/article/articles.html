@@ -1,0 +1,85 @@
+{% extends 'base/base.html' %} {% block title %} Articles {% endblock title %}
+{% block content %}
+
+<div class="row">
+  {% for article in page_obj %}
+  <div class="col-12 col-md-4">
+    <div class="card rounded-3 mb-4">
+      <img
+        src="{{article.cover_image.url}}"
+        class="card-img-top"
+        alt="{{article.title}}"
+      />
+      <div class="card-body">
+        <h3 class="card-title text-center">
+          {{article.title|truncatewords:3 }}
+        </h3>
+        <p class="card-text">{{article.body|truncatewords:20}}</p>
+        <div class="text-center">
+          <a
+            href="{% url 'article.article_detail' article.id  %}"
+            class="btn btn-success rounded-pill"
+            >Read Now</a
+          >
+        </div>
+      </div>
+
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <small> Created At: {{article.createdAt}} </small>
+        </li>
+        <li class="list-group-item">
+          <small> Last Modified At: {{article.modifiedAt}} </small>
+        </li>
+      </ul>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% comment %} Taken from Documentation {% endcomment %}
+
+<div class="pagination">
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a
+        href="?page={{ page_obj.previous_page_number }}"
+        class="page-link"
+        href="{{ page_obj.previous_page_number }}"
+        >&laquo;</a
+      >
+    </li>
+    {% endif %} {% for num in range %}
+    <li class="page-item {% if num == page_obj.number %} active {% endif %}">
+      <a href="?page={{num}}" class="page-link">{{num}}</a>
+    </li>
+    {% endfor %} {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.next_page_number }}"
+        >&raquo;</a
+      >
+    </li>
+    {% endif %}
+  </ul>
+
+  {% comment %}
+  <span class="step-links">
+    {% if page_obj.has_previous %}
+    <a href="?page=1">&laquo; first</a>
+    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+
+    {% endif %}
+
+    <span class="current">
+      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+    </span>
+
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">next</a>
+    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+    {% endif %} {% endcomment %}
+  </span>
+</div>
+
+{% endblock content %}

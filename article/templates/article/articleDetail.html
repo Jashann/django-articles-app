@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %} 
+
+{% block title %} {{article.title}} {% endblock %}
+
+
+{% block content %}
+
+<div class="article">
+    <img class="img-fluid rounded-3" src="{{article.cover_image.url}}" alt="{{article.title}">
+    
+    <h1 class="pt-5 text-center">{{article.title}}</h1>
+    
+    <p>{{article.body|linebreaks}}</p>
+      
+</div>
+
+{% endblock %}

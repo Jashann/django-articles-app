@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+body {
+  font-family: Quicksand, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+#logo {
+  height: 93px;
+}
+
+.page-item.active .page-link {
+  background-color: #2fb380;
+  border-color: #2fb380;
+}
