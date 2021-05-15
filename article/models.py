@@ -13,7 +13,7 @@ class Article(models.Model):
     createdAt = models.DateTimeField(auto_now_add=True, null=True)
     
     featured = models.BooleanField(default=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return self.title
