@@ -2,4 +2,65 @@
 
 {% block title %} Index {% endblock %}
 
-{% block content %} Hello world {% endblock %}
+{% block content %} 
+
+{% if user.is_authenticated %}
+
+    {% if articles %}
+
+        <div class="bg-light p-5 rounded-3">
+
+            <h1 class="text-center text-success mt-2 mb-5">Featured Articles</h1>
+
+            <div class="row">
+                {% for article in articles %}
+                <div class="col-12 col-md-6">
+                    <div class="card rounded-3 mb-4">
+                    <img
+                        src="{{article.cover_image.url}}"
+                        class="card-img-top"
+                        alt="{{article.title}}"
+                    />
+                    <div class="card-body">
+                        <h3 class="card-title text-center">
+                        {{article.title|truncatewords:3 }}
+                        </h3>
+                        <p class="card-text">{{article.body|truncatewords:30}}</p>
+                        <div class="text-center">
+                        <a
+                            href="{% url 'article.article_detail' article.id  %}"
+                            class="btn btn-success rounded-pill"
+                            >Read Now</a
+                        >
+                        </div>
+                    </div>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                        <small> Created At: {{article.createdAt}} </small>
+                        </li>
+                        <li class="list-group-item">
+                        <small> Last Modified At: {{article.modifiedAt}} </small>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    {% endif %}
+
+
+{% else %}
+
+    <div class="alert alert-success text-center p-5">
+        <h1>You need to login to read & create articles</h1>
+        <div class="text-center mt-5">
+            <a class="btn btn-success rounded-pill" href="/log-in">Get started</a>
+        </div>
+    </div>
+
+{% endif %}
+
+{% endblock %}

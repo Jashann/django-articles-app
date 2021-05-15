@@ -45,10 +45,38 @@
                 >Articles</a
               >
             </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-center text-light bg-info" href="/article/create"
+                >Create Article</a
+              >
+            </li>
+
+            {% if user.is_authenticated %}
+              <li class="nav-item dropdown dropstart me-3">
+                <img src="{% static 'base/person.svg' %}" class="nav-link dropdown-toggle person" id="person-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" /> 
+                <ul class="dropdown-menu" aria-labelledby="person-dropdown">
+                  <li> <strong class="dropdown-item"> Logged In As  <span class="fw-bold"> {{user.username | upper}}  </span></strong> </li>
+                  <li>
+                    <form action="/log-out/" method="post">
+                        {% csrf_token %}
+                        <input class="dropdown-item"  type="submit" value="Log out" />
+                    </form>
+                  </li>
+
+                </ul>
+            </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link bg-success text-light text-center active" href="/log-in">Login</a>
+              </li>
+            {% endif %}
+
           </ul>
         </div>
       </div>
     </nav>
+
 
     <div class="container">{% block content %} {% endblock %}</div>
 

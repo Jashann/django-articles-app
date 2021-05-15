@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %} 
+
+{% block title %} Sign Up {% endblock %}
+
+{% block content %}
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+            
+            <form method="POST" action="/sign-up/" class="bg-light rounded-3 p-5">
+                
+                {% csrf_token %}
+
+                <h1 class="text-center text-success">Sign Up</h1>
+                
+                {% if error %}
+                <div class="alert alert-dismissible alert-danger mt-5">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <strong>{{error}}</strong>
+                </div>
+                {% endif %}
+
+                <div class="form-group">
+                    <label for="username" class="form-label mt-4">Username</label>
+                    <input required name="username" type="text" class="form-control rounded-pill" id="username" aria-describedby="emailHelp" placeholder="jashan">
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label mt-4">Email address</label>
+                    <input required name="email" type="email" class="form-control rounded-pill" id="email" aria-describedby="emailHelp" placeholder="jashan@gmail.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password1" class="form-label mt-4">Password</label>
+                    <input required name="password1" type="password" class="form-control rounded-pill" id="password1" placeholder="***********">
+                </div>
+                 <div class="form-group">
+                    <label for="password2" class="form-label mt-4">Confirm Password</label>
+                    <input required name="password2" type="password" class="form-control rounded-pill" id="password2" placeholder="***********">
+                </div>
+
+                
+                <button type="submit" class="btn btn-success rounded-pill my-4 w-100"> Sign Up </button>
+
+            </form>
+
+        </div>
+    </div>
+
+{% endblock %}

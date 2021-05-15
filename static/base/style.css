@@ -16,3 +16,31 @@ body {
   background-color: #2fb380;
   border-color: #2fb380;
 }
+
+/* for inputs focus styling */
+.form-control:focus {
+  border-color: #2fb38082;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 5%), 0 0 0 0.25rem rgb(47 179 128 / 30%);
+}
+
+#person {
+  width: 32px;
+  height: 32px;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: #2fb380;
+}
+
+.rounded-20 {
+  border-radius: 20px;
+}
+.review .person {
+  height: 64px;
+}
+
+.create-article .form-control:focus {
+  border-color: #287bb59c;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 5%), 0 0 0 0.25rem rgb(40 123 181 / 34%);
+}

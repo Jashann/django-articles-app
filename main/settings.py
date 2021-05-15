@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'article',
+    'user'
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # For image uploading
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+# For authentication
+LOGIN_URL = "/log-in"
+LOGIN_REDIRECT_URL = "/articles"
+REDIRECT_AUTHENTICATED_USER = True
