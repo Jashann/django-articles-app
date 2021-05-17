@@ -19,6 +19,16 @@ def createArticle(request):
     if request.method == "GET":
         return render(request, "article/create-article.html")
 
+    if request.method == "POST":
+        title = request.POST['title']
+        body = request.POST['body']
+        user = request.user
+        cover_image = request.FILES['cover_image']
+
+        Article.objects.create(title=title, body=body, cover_image=cover_image, user=user)
+
+        return redirect("/article/create")
+
 
 
 @login_required
@@ -39,6 +49,7 @@ def articles(request):
         "page_obj": page_obj,
         "range": range(1, totalNum+1),
     }
+
 
     return render(request, "article/articles.html", context)
 

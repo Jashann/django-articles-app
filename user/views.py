@@ -1,3 +1,4 @@
+from article.models import Article, Review
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.db import IntegrityError
@@ -67,7 +68,10 @@ def logInUser(request):
             login(request, user)
 
             # Taken from "https://stackoverflow.com/questions/38431166/redirect-to-next-after-login-in-django"
-            return redirect(request.GET.get('next'))
+            if request.GET.get('next'):
+                return redirect(request.GET.get('next'))
+            else:
+                return redirect("/")
         else:
             context = {
                 "error": "Invalid username or password"
@@ -76,3 +80,18 @@ def logInUser(request):
     
     else:
         return render(request, "user/log-in.html")
+
+
+def userProfile(request, username):
+    user = User.objects.get(username=username)
+    articles = Article.objects.filter(user=user)
+    reviews = Review.objects.filter(user=user)
+    
+    context = {
+        'user': user,
+        'articles': articles,
+        'reviews': reviews,
+    }
+
+
+    return render(request, "user/profile.html", context)

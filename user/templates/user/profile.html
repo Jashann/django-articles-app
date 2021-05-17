@@ -1,0 +1,104 @@
+{% extends 'base/base.html' %} 
+
+{% block title %} Profile {% endblock %}
+
+{% block content %}
+
+    <div class="profile">
+
+        <div class="profile-info rounded-3 row align-items-center bg-info p-5">
+            <div class="col-md-4 border-end">
+                {% load static %}
+                <img src="{% static 'base/person.svg' %}" alt="Avatar">
+            </div>
+            <div class="col-md-8">
+                <h1 class='lead text-light'>Username: {{user.username|upper}}</h1>
+                <h1 class='lead text-light'>Date Joined: {{user.date_joined|upper}}</h1>
+                <h1 class='lead text-light'>
+                    Active: {% if user.is_active %} Online {% else %} Offline {% endif %}
+                </h1>
+                <h1 class='lead text-light'>
+                    Admin: {% if user.is_superuser %} Yes {% else %} No {% endif %}
+                </h1>
+            </div>
+        </div>
+
+        <div class="profile-articles rounded-3 row align-items-center bg-light p-5 mt-5">
+            <h2 class='text-center mb-5'> <span class="text-capitalize">{{user.username}}</span> have {{articles.count}} article{{articles.count|pluralize}}</h2>
+
+            <div class="row">
+            {% for article in articles %}
+                <div class="col-12 col-md-6">
+                    <div class="card rounded-3 mb-4">
+                    <img
+                        src="{{article.cover_image.url}}"
+                        class="card-img-top"
+                        alt="{{article.title}}"
+                    />
+                    <div class="card-body">
+                        <h3 class="card-title text-center">
+                        {{article.title|truncatewords:3 }}
+                        </h3>
+                        <p class="card-text">{{article.body|truncatewords:20}}</p>
+                        <div class="text-center">
+                        <a
+                            href="{% url 'article.article_detail' article.id  %}"
+                            class="btn btn-success rounded-pill"
+                            >Read Now</a
+                        >
+                        </div>
+                    </div>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                        <small> Created At: {{article.createdAt}} -- {{admin}} </small>
+                        </li>
+                        <li class="list-group-item">
+                        <small> Last Modified At: {{article.modifiedAt}} </small>
+                        </li>
+                        <li class="list-group-item">
+                            <small> Created by: <a class="text-capitalize fw-bolder" href="/user/{{article.user.username}}"> {{article.user.username}} </a>
+                            </small>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+
+
+
+
+
+
+        </div>
+
+        <div class="profile-reviews rounded-3 row align-items-center bg-success p-5 mt-4">
+            <h2 class='text-center text-light mb-5'> <span class="text-capitalize">{{user.username}}</span> have {{reviews.count}} review{{reviews.count|pluralize}}</h2>
+
+            {% for review in reviews %}
+                {% comment %} <h2>{{review.title}} -- {{review.user.username}}</h2> {% endcomment %}
+                
+                <div class="review card text-dark rounded-20 p-3 mt-4">
+                    <div>
+                        {% load static %}
+                        <img src="{% static 'base/person.svg' %}" class="person d-inline-block me-2" /> 
+                        <a href="/user/{{review.user.username}}">
+                            <strong class="text-capitalize">{{review.user.username}}</strong>
+                        </a>
+                        &nbsp ----- &nbsp
+                        <small>{{review.createdAt}} (UTC)</small>
+                    </div>
+                    <br>
+                    <h4><strong>{{review.title}}</strong></h4>
+                
+                    <p>{{review.body}}</p>
+
+                </div>
+                
+            {% endfor %}
+
+        </div>
+
+    </div>
+{% endblock %}

@@ -37,10 +37,14 @@
 
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                        <small> Created At: {{article.createdAt}} </small>
+                            <small> Created At: {{article.createdAt}} </small>
                         </li>
                         <li class="list-group-item">
-                        <small> Last Modified At: {{article.modifiedAt}} </small>
+                            <small> Last Modified At: {{article.modifiedAt}} </small>
+                        </li>
+                       <li class="list-group-item">
+                            <small> Created by: <a class="text-capitalize fw-bolder" href="/user/{{article.user.username}}"> {{article.user.username}} </a>
+                            </small>
                         </li>
                     </ul>
                     </div>

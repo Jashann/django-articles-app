@@ -9,6 +9,8 @@
     <img class="img-fluid rounded-3" src="{{article.cover_image.url}}" alt="{{article.title}">
     
     <h1 class="pt-5 text-center">{{article.title}}</h1>
+
+    <strong class="text-uppercase"> Created by: {{article.user.username}}</strong>
     
     <p>{{article.body|linebreaks}}</p>
       
@@ -56,7 +58,9 @@
             <div>
                 {% load static %}
                 <img src="{% static 'base/person.svg' %}" class="person d-inline-block me-2" /> 
-                <strong class="text-capitalize">{{review.user.username}}</strong>
+                <a href="/user/{{review.user.username}}">
+                    <strong class="text-capitalize">{{review.user.username}}</strong>
+                </a>
                 &nbsp ----- &nbsp
                 <small>{{review.createdAt}} (UTC)</small>
             </div>

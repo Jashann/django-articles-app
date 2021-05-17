@@ -7,7 +7,7 @@
     <div class="row justify-content-center">
         <div class="col-12">
             
-            <form method="POST" action="" class="bg-light rounded-3 p-5 create-article">
+            <form enctype="multipart/form-data" method="POST" action="/article/create" class="bg-light rounded-3 p-5 create-article">
                 
                 {% csrf_token %}
 
@@ -22,7 +22,7 @@
 
                 <div class="form-group">
                     <label for="file" class="form-label mt-4">Cover Image</label>
-                    <input name="cover-image" class="form-control rounded-pill" type="file" id="file">
+                    <input name="cover_image" class="form-control rounded-pill" type="file" id="file">
                 </div>
 
                 <div class="form-group">
@@ -32,8 +32,8 @@
                 
                 
                 <div class="form-group">
-                    <label for="exampleTextarea" class="form-label mt-4">Body</label>
-                    <textarea class="form-control" id="exampleTextarea" rows="10" spellcheck="true" data-ms-editor="true" placeholder="Tell here what your article is about in great detail ..."></textarea>
+                    <label for="body" class="form-label mt-4">Body</label>
+                    <textarea name="body" class="form-control" id="body" rows="10" spellcheck="true" data-ms-editor="true" placeholder="Tell here what your article is about in great detail ..."></textarea>
                   </div>
 
                 <div>

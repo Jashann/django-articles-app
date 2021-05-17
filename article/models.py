@@ -13,6 +13,8 @@ class Article(models.Model):
     createdAt = models.DateTimeField(auto_now_add=True, null=True)
     
     featured = models.BooleanField(default=False)
+
+    # Relationship -> One to Many
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
