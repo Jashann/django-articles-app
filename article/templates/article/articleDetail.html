@@ -5,7 +5,15 @@
 
 {% block content %}
 
-<div class="article">
+<div class="p-5 mb-4 bg-light">
+    <h1>Quick Links</h1>
+    <nav class="nav mt-3">
+        <a class="nav-link active bg-success text-light me-2" aria-current="page" href="#article" >Article <i class="fas fa-arrow-down"></i> </a>
+        <a class="nav-link active bg-success text-light me-2" aria-current="page" href="#reviews">Reviews <i class="fas fa-arrow-down"></i> </a>
+    </nav>
+</div>
+
+<div id="article" class="article">
     <img class="img-fluid rounded-3" src="{{article.cover_image.url}}" alt="{{article.title}">
     
     <h1 class="pt-5 text-center">{{article.title}}</h1>
@@ -17,14 +25,18 @@
 </div>
 
 
+
+<div class="my-5 py-5"></div>
+
 {% comment %} Start of reviews {% endcomment %}
 
-<div class="bg-success p-5 rounded-3 text-light">
+
+<div id="reviews" class="bg-success p-5 rounded-3 text-light">
 
     <h1 class="text-light">Reviews</h1>
 
     {% if user.is_authenticated %}    
-        <form action="/article/submit-review" method="post" class="mt-2 mb-5">
+        <form action="{% url 'article.submit_review' %}" method="post" class="mt-2 mb-5">
             
             {% csrf_token %}
 

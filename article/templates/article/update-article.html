@@ -1,23 +1,24 @@
 {% extends 'base/base.html' %} 
 
-{% block title %} Create Article{% endblock %}
+{% block title %} Edit Article{% endblock %}
 
 {% block content %}
 
     <div class="row justify-content-center">
         <div class="col-12">
             
-            <form enctype="multipart/form-data" method="POST"" class="bg-light rounded-3 p-5 create-article">
-                
+            <form enctype="multipart/form-data" method="POST" class="bg-light rounded-3 p-5 create-article">
                 {% csrf_token %}
+
                 {% load widget_tweaks %}
 
-                <h1 class="text-center text-info">Create Article</h1>
+                <h1 class="text-center text-info">Edit Article</h1>
 
                 <div class="form-group">
                     {{ form.title|add_label_class:'form-label mt-4 fw-bolder'}}
                     {{ form.title|add_class:'form-control rounded-pill' }}
-                </div>                
+                </div>
+                
                 <div class="form-group">
                     {{ form.cover_image|add_label_class:'form-label mt-4 fw-bolder'}}
                     {{ form.cover_image|add_class:'form-control rounded-pill' }}
@@ -28,8 +29,9 @@
                     {{ form.body|add_class:'form-control'|attr:'rows:20'|attr:'cols:20' }}
                 </div>
 
-                <button type="submit" class="btn btn-info rounded-pill my-4"> Create Article </button>                
-                
+                <input type="submit" class="btn btn-info rounded-pill mt-4" value="Save Article">
+
+
             </form>
 
         </div>

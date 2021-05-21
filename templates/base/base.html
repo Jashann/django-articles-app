@@ -56,7 +56,11 @@
               <li class="nav-item dropdown dropstart me-3">
                 <img src="{% static 'base/person.svg' %}" class="nav-link dropdown-toggle person" id="person-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" /> 
                 <ul class="dropdown-menu" aria-labelledby="person-dropdown">
-                  <li> <strong class="dropdown-item"> Logged In As  <span class="fw-bold"> {{user.username | upper}}  </span></strong> </li>
+                  
+                  <li>
+                    <a href="{% url 'user.own_profile' user.username %}" class="dropdown-item text-white bg-info fw-bolder">My Profile, {{user.username | upper}} </a>
+                  </li>
+
                   <li>
                     <form action="/log-out/" method="post">
                         {% csrf_token %}
@@ -84,6 +88,8 @@
 
 
     <div class="mt-5"></div>
+
+   <script defer src="https://kit.fontawesome.com/feb7c09e30.js" crossorigin="anonymous"></script>
 
     <script
       defer

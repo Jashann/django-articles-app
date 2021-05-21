@@ -12,7 +12,6 @@
         </nav>
     </div>
 
-
     <div class="profile">
 
         <div class="profile-info rounded-3 row align-items-center bg-info p-5">
@@ -56,6 +55,20 @@
                             >Read</a
                         >
                         
+                        <a
+                            href="{% url 'article.article_update' article.id  %}"
+                            class="btn btn-warning rounded-pill"
+                            >Edit</a
+                        >
+
+                        <a
+                            href="{% url 'article.article_delete' article.id  %}"
+                            class="btn btn-danger rounded-pill"
+                            >Delete</a
+                        >
+
+
+
                         </div>
                     </div>
 
@@ -75,6 +88,11 @@
                 </div>
             {% endfor %}
             </div>
+
+
+
+
+
 
         </div>
 
@@ -102,8 +120,10 @@
                     <div class="border border-1 border-success rounded-20 p-3">
                         <h5>Article Info</h3>
                         <h6>Title: {{review.article.title}}</h4>
-                        <small class="d-block">Created by: <a class="text-capitalize"  href="{% url 'user.user_profile' review.article.user.username %}">{{review.article.user.username}}</a></small>
-                        <a href="{% url 'article.article_detail' review.article.id %}" class="btn btn-success btn-sm mt-3 rounded-pill">Read Now</a>
+                        <small class="d-block">Created by: <a class="text-capitalize" href="{% url 'user.user_profile' review.article.user.username %}">{{review.article.user.username}}</a></small>
+                        <button class="btn btn-success btn-sm mt-3 rounded-pill">Read Now</button>
+                        <a href="{% url 'article.review_update' review.id %}" class="btn btn-warning btn-sm mt-3 rounded-pill">Edit Review</a>
+                        <a href="{% url 'article.review_delete' review.id %}" class="btn btn-danger btn-sm mt-3 rounded-pill">Delete Review</a>
                     </div>
 
                 </div>

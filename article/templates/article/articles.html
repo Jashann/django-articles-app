@@ -32,7 +32,7 @@
           <small> Last Modified At: {{article.modifiedAt}} </small>
         </li>
       <li class="list-group-item">
-          <small> Created by: <a class="text-capitalize fw-bolder" href="/user/{{article.user.username}}"> {{article.user.username}} </a>
+          <small> Created by: <a class="text-capitalize fw-bolder" href="{% url 'user.user_profile' article.user.username %}"> {{article.user.username}} </a>
           </small>
       </li>
 

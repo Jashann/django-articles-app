@@ -40,7 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'article',
-    'user'
+    'user',
+
+    # For django form styling
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def signUpUser(request):
@@ -81,7 +82,7 @@ def logInUser(request):
     else:
         return render(request, "user/log-in.html")
 
-
+@login_required
 def userProfile(request, username):
     user = User.objects.get(username=username)
     articles = Article.objects.filter(user=user)
@@ -93,5 +94,18 @@ def userProfile(request, username):
         'reviews': reviews,
     }
 
-
     return render(request, "user/profile.html", context)
+
+@login_required
+def privateProfile(request, username):
+    user = User.objects.get(username=username)
+    articles = Article.objects.filter(user=user)
+    reviews = Review.objects.filter(user=user)
+    
+    context = {
+        'user': user,
+        'articles': articles,
+        'reviews': reviews,
+    }
+
+    return render(request, "user/privateProfile.html", context)

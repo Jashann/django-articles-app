@@ -1,0 +1,3 @@
+REMEMBER To make:
+    privateProfile accessible only to the user
+        -> Editing Article, Deleting
