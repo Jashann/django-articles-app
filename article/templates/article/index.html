@@ -27,11 +27,28 @@
                         </h3>
                         <p class="card-text">{{article.body|truncatewords:30}}</p>
                         <div class="text-center">
+                            {% if user.id == article.user.id %}
+                            <a
+                            href="{% url 'article.article_update' article.id  %}"
+                            class="btn btn-warning rounded-pill">
+                            Edit
+                            </a>
+                        {% endif %}
+
                         <a
                             href="{% url 'article.article_detail' article.id  %}"
-                            class="btn btn-success rounded-pill"
-                            >Read Now</a
-                        >
+                            class="btn btn-success rounded-pill">
+                            Read Now
+                        </a>
+
+                        {% if user.id == article.user.id %}
+                            <a
+                            href="{% url 'article.article_delete' article.id  %}"
+                            class="btn btn-danger rounded-pill">
+                            Delete
+                            </a>
+                        {% endif %}
+
                         </div>
                     </div>
 

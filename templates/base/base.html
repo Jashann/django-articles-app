@@ -58,7 +58,7 @@
                 <ul class="dropdown-menu" aria-labelledby="person-dropdown">
                   
                   <li>
-                    <a href="{% url 'user.own_profile' user.username %}" class="dropdown-item text-white bg-info fw-bolder">My Profile, {{user.username | upper}} </a>
+                    <a href="{% url 'user.user_profile' user.username %}" class="dropdown-item text-white bg-info fw-bolder">My Profile, {{user.username | upper}} </a>
                   </li>
 
                   <li>

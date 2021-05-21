@@ -1,14 +1,15 @@
+from django.http.response import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Article, Review
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 # EDITING AND DELETING ARTICLE IMPORT - CLASS BASED VIEWS
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from article.models import Article
 from django.urls import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, request
 
 from article import models
 
@@ -101,9 +102,18 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
 
 # EDITING AND DELETING ARTICLE
 class ArticleUpdateView(UpdateView):
+
     model = Article
     fields = ['title', 'cover_image', 'body']
     template_name = 'article/update-article.html'
+
+    def get_queryset(self):
+        queryset = super(ArticleUpdateView, self).get_queryset()
+        queryset = queryset.filter(user=self.request.user)
+        return queryset
+
+    def form_valid(self, form):
+        return super().form_valid(form)
 
     # Where to go after the Article is created
     def get_success_url(self):
@@ -113,6 +123,11 @@ class ArticleUpdateView(UpdateView):
 class ArticleDeleteView(DeleteView):
     model = Article
     template_name = 'article/delete-article.html'
+
+    def get_queryset(self):
+        queryset = super(ArticleDeleteView, self).get_queryset()
+        queryset = queryset.filter(user=self.request.user)
+        return queryset
 
     def get_success_url(self):
         return reverse("user.own_profile", kwargs={'username': self.request.user.username}) 
@@ -142,6 +157,7 @@ def submitReview(request):
 
 def reviewUpdate(request, pk):
     if request.method == "POST":
+
         pk = request.POST['id']
         title = request.POST['title']
         body = request.POST['body']
@@ -155,9 +171,12 @@ def reviewUpdate(request, pk):
 
         return HttpResponseRedirect(reverse("user.own_profile", kwargs={'username': request.user.username} ))
 
-    else:
+    else: # GET REQUEST
         review = Review.objects.get(pk=pk)
-        print(review)
+
+        if not request.user == review.user:
+            raise Http404
+
         context = {
             'review': review
         }

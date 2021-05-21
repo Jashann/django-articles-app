@@ -90,28 +90,9 @@ def userProfile(request, username):
     reviews = Review.objects.filter(user=user)
     
     context = {
-        'user': user,
+        'userProfile': user,
         'articles': articles,
         'reviews': reviews,
     }
 
     return render(request, "user/profile.html", context)
-
-@login_required
-def privateProfile(request, username):
-
-    user = User.objects.get(username=username)
-
-    if not user == request.user:
-        raise Http404
-
-    articles = Article.objects.filter(user=user)
-    reviews = Review.objects.filter(user=user)
-    
-    context = {
-        'user': user,
-        'articles': articles,
-        'reviews': reviews,
-    }
-
-    return render(request, "user/privateProfile.html", context)

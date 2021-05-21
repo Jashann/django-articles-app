@@ -16,11 +16,31 @@
 <div id="article" class="article">
     <img class="img-fluid rounded-3" src="{{article.cover_image.url}}" alt="{{article.title}">
     
+
     <h1 class="pt-5 text-center">{{article.title}}</h1>
 
-    <strong class="text-uppercase"> Created by: {{article.user.username}}</strong>
+    <strong class="text-uppercase"> Created by: <a href="{% url 'user.user_profile' article.user.username %}">{{article.user.username}}</a></strong>
     
     <p>{{article.body|linebreaks}}</p>
+
+     <div class='mt-5'>
+        {% if user.id == article.user.id %}
+            <a
+              href="{% url 'article.article_update' article.id  %}"
+              class="btn btn-warning rounded-pill">
+              Edit Article
+            </a>
+          {% endif %}
+
+          {% if user.id == article.user.id %}
+            <a
+              href="{% url 'article.article_delete' article.id  %}"
+              class="btn btn-danger rounded-pill">
+              Delete Article
+            </a>
+          {% endif %}
+
+    </div>
       
 </div>
 
