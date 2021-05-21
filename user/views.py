@@ -1,3 +1,4 @@
+from django.http.response import Http404
 from article.models import Article, Review
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
@@ -98,7 +99,12 @@ def userProfile(request, username):
 
 @login_required
 def privateProfile(request, username):
+
     user = User.objects.get(username=username)
+
+    if not user == request.user:
+        raise Http404
+
     articles = Article.objects.filter(user=user)
     reviews = Review.objects.filter(user=user)
     

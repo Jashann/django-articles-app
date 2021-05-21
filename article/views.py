@@ -110,7 +110,6 @@ class ArticleUpdateView(UpdateView):
         return reverse("user.own_profile", kwargs={'username': self.request.user.username}) 
 
 
-
 class ArticleDeleteView(DeleteView):
     model = Article
     template_name = 'article/delete-article.html'
