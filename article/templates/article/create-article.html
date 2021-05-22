@@ -4,8 +4,6 @@
 
 {% block content %}
 
-<script src="https://cdn.tiny.cloud/1/xvxpcovggn2llsl5x0rkx4xoogdvbbcy7w7u4bzwurj4nizb/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-
     <div class="row justify-content-center">
         <div class="col-12">
             
@@ -27,7 +25,7 @@
 
                 <div class="form-group">
                     {{ form.body|add_label_class:'form-label mt-4 fw-bolder'}}
-                    {{ form.body|add_class:'form-control'|attr:'rows:20'|attr:'cols:20'|attr:'id:mytextarea' }}
+                    {{ form.body|add_class:'form-control'|attr:'rows:20'|attr:'cols:20' }}
                 </div>
 
                 <button type="submit" class="btn btn-info rounded-pill my-4"> Create Article </button>                
@@ -36,11 +34,4 @@
 
         </div>
     </div>
-
-<script>
-tinymce.init({
-        selector: '#mytextarea'
-      });
-</script>
-
 {% endblock %}

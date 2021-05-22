@@ -117,7 +117,7 @@ class ArticleUpdateView(UpdateView):
 
     # Where to go after the Article is created
     def get_success_url(self):
-        return reverse("user.own_profile", kwargs={'username': self.request.user.username}) 
+        return reverse("user.user_profile", kwargs={'username': self.request.user.username}) 
 
 
 class ArticleDeleteView(DeleteView):
@@ -130,7 +130,7 @@ class ArticleDeleteView(DeleteView):
         return queryset
 
     def get_success_url(self):
-        return reverse("user.own_profile", kwargs={'username': self.request.user.username}) 
+        return reverse("user.user_profile", kwargs={'username': self.request.user.username}) 
 
 
 
@@ -169,7 +169,7 @@ def reviewUpdate(request, pk):
 
         review.save()
 
-        return HttpResponseRedirect(reverse("user.own_profile", kwargs={'username': request.user.username} ))
+        return HttpResponseRedirect(reverse("user.user_profile", kwargs={'username': request.user.username} ))
 
     else: # GET REQUEST
         review = Review.objects.get(pk=pk)
@@ -188,4 +188,4 @@ class ReviewDeleteView(DeleteView):
     template_name = 'article/review-delete.html'
 
     def get_success_url(self):
-        return reverse("user.own_profile", kwargs={'username': self.request.user.username}) 
+        return reverse("user.user_profile", kwargs={'username': self.request.user.username}) 
