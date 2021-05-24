@@ -1,29 +1,40 @@
 {% extends 'base/base.html' %} 
 
-{% block title %} Update Review {% endblock %}
+{% block title %} Update Article{% endblock %}
 
 {% block content %}
 
     <div class="row justify-content-center">
         <div class="col-12">
             
-            <form method="POST" class="bg-light rounded-3 p-5">
-                
-                {% csrf_token %}
+            {% comment %} Includes the required css and scripts for tinyMCE editor {% endcomment %}
+            {{ form.media }}
 
-                <h1 class="text-center text-info">Edit Review</h1><h></h1>
+                <form class="bg-light rounded-3 p-5 create-article" method="post" action="" enctype="multipart/form-data">
 
-                <input type="hidden" name="id" value="{{review.id}}">
+                    {% csrf_token %}
+                    {% load widget_tweaks %}
 
-                <input type="text" name="title" class="form-control mb-3"  placeholder="Title" value="{{review.title}}">
+                    <h1 class="text-center text-info">Update Article</h1>
 
-                <textarea name="body" rows="14" class="form-control mb-3" placeholder="Describe in detail">{{review.body}}</textarea>
+                    <div class="form-group">
+                        {{ form.title|add_label_class:'form-label mt-4 fw-bolder'}}
+                        {{ form.title|add_class:'form-control rounded-pill' }}
+                    </div> 
+                    <div class="form-group">
+                        {{ form.cover_image|add_label_class:'form-label mt-4 fw-bolder'}}
+                        {{ form.cover_image|add_class:'form-control rounded-pill' }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.body|add_label_class:'form-label mt-4 fw-bolder'}}
+                        {{ form.body|add_class:'form-control rounded-3' }}
+                    </div>  
 
-                <button type="submit" class="btn btn-info rounded-pill my-4"> Save Review </button>                
-                
-            </form>
+                    <input class="btn btn-info rounded-pill mt-4" type="submit" value="Save Article">
+
+                </form>
 
         </div>
     </div>
-
 {% endblock %}
+

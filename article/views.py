@@ -9,9 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from article.models import Article
 from django.urls import reverse
-from django.http import HttpResponseRedirect, request
-
-from article import models
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 def index(request):
@@ -24,7 +22,6 @@ def index(request):
     return render(request, "article/index.html", context)
 
 
-@login_required
 def articles(request):
 
     articles = Article.objects.all().order_by("-createdAt")
@@ -47,7 +44,6 @@ def articles(request):
     return render(request, "article/articles.html", context)
 
 
-@login_required
 def articleDetail(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
 
@@ -89,19 +85,17 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     model = Article
     fields = ['title', 'cover_image', 'body']
     template_name = 'article/create-article.html'
-
-    # To pass in fields that are not in template but are required, like user
+    
+    # To pass in fields that are not set like user
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-    # Where to go after the Article is created
     def get_success_url(self):
         return reverse("article.articles") 
 
-
 # EDITING AND DELETING ARTICLE
-class ArticleUpdateView(UpdateView):
+class ArticleUpdateView(LoginRequiredMixin, UpdateView):
 
     model = Article
     fields = ['title', 'cover_image', 'body']
@@ -120,7 +114,7 @@ class ArticleUpdateView(UpdateView):
         return reverse("user.user_profile", kwargs={'username': self.request.user.username}) 
 
 
-class ArticleDeleteView(DeleteView):
+class ArticleDeleteView(LoginRequiredMixin, DeleteView):
     model = Article
     template_name = 'article/delete-article.html'
 
@@ -134,7 +128,7 @@ class ArticleDeleteView(DeleteView):
 
 
 
-
+@login_required
 def submitReview(request):
     if request.method == "POST":
         title = request.POST['reviewTitle']
@@ -154,7 +148,7 @@ def submitReview(request):
         
         return redirect(request.META['HTTP_REFERER'] + '#reviews') # request.META['HTTP_REFERER'] -> redirects to same page
 
-
+@login_required
 def reviewUpdate(request, pk):
     if request.method == "POST":
 
@@ -183,7 +177,7 @@ def reviewUpdate(request, pk):
         return render(request,'article/review-update.html', context)
 
 
-class ReviewDeleteView(DeleteView):
+class ReviewDeleteView(LoginRequiredMixin, DeleteView):
     model = Review
     template_name = 'article/review-delete.html'
 

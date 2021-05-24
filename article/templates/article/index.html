@@ -4,84 +4,72 @@
 
 {% block content %} 
 
-{% if user.is_authenticated %}
+{% if articles %}
 
-    {% if articles %}
+    <div class="bg-light p-5 rounded-3">
 
-        <div class="bg-light p-5 rounded-3">
+        <h1 class="text-center text-success mt-2 mb-5">Featured Articles</h1>
 
-            <h1 class="text-center text-success mt-2 mb-5">Featured Articles</h1>
-
-            <div class="row">
-                {% for article in articles %}
-                <div class="col-12 col-md-6">
-                    <div class="card rounded-3 mb-4">
-                    <img
-                        src="{{article.cover_image.url}}"
-                        class="card-img-top"
-                        alt="{{article.title}}"
-                    />
-                    <div class="card-body">
-                        <h3 class="card-title text-center">
-                        {{article.title|truncatewords:3 }}
-                        </h3>
-                        <p class="card-text">{{article.body|truncatewords:30}}</p>
-                        <div class="text-center">
-                            {% if user.id == article.user.id %}
-                            <a
-                            href="{% url 'article.article_update' article.id  %}"
-                            class="btn btn-warning rounded-pill">
-                            Edit
-                            </a>
-                        {% endif %}
-
-                        <a
-                            href="{% url 'article.article_detail' article.id  %}"
-                            class="btn btn-success rounded-pill">
-                            Read Now
-                        </a>
-
+        <div class="row">
+            {% for article in articles %}
+            <div class="col-12 col-md-6">
+                <div class="card rounded-3 mb-4">
+                <img
+                    src="{{article.cover_image.url}}"
+                    class="card-img-top"
+                    alt="{{article.title}}"
+                />
+                <div class="card-body">
+                    <h4 class="card-title text-center">
+                    {{article.title|truncatewords:20 }}
+                    </h4>
+                    <div class="text-center mt-5 mb-4">
                         {% if user.id == article.user.id %}
-                            <a
-                            href="{% url 'article.article_delete' article.id  %}"
-                            class="btn btn-danger rounded-pill">
-                            Delete
-                            </a>
-                        {% endif %}
+                        <a
+                        href="{% url 'article.article_update' article.id  %}"
+                        class="btn btn-warning rounded-pill">
+                        Edit
+                        </a>
+                    {% endif %}
 
-                        </div>
-                    </div>
+                    <a
+                        href="{% url 'article.article_detail' article.id  %}"
+                        class="btn btn-success rounded-pill">
+                        Read Now
+                    </a>
 
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <small> Created At: {{article.createdAt}} </small>
-                        </li>
-                        <li class="list-group-item">
-                            <small> Last Modified At: {{article.modifiedAt}} </small>
-                        </li>
-                        <li class="list-group-item">
-                            <small> Created by: <a class="text-capitalize fw-bolder" href="{% url 'user.user_profile' article.user.username %}"> {{article.user.username}} </a>
-                            </small>
-                        </li>
-                    </ul>
+                    {% if user.id == article.user.id %}
+                        <a
+                        href="{% url 'article.article_delete' article.id  %}"
+                        class="btn btn-danger rounded-pill">
+                        Delete
+                        </a>
+                    {% endif %}
+
                     </div>
                 </div>
-                {% endfor %}
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <small> Created At: {{article.createdAt}} </small>
+                    </li>
+                    <li class="list-group-item">
+                        <small> Last Modified At: {{article.modifiedAt}} </small>
+                    </li>
+                    <li class="list-group-item">
+                        <small> Created by: <a class="text-capitalize fw-bolder" href="{% url 'user.user_profile' article.user.username %}"> {{article.user.username}} </a>
+                        </small>
+                    </li>
+                </ul>
+                </div>
             </div>
-        </div>
-
-    {% endif %}
-
-
-{% else %}
-
-    <div class="alert alert-success text-center p-5">
-        <h1>You need to login to read & create articles</h1>
-        <div class="text-center mt-5">
-            <a class="btn btn-success rounded-pill" href="/log-in">Get started</a>
+            {% endfor %}
         </div>
     </div>
 
 {% endif %}
+
+
+
 
 {% endblock %}

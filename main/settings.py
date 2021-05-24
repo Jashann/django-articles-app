@@ -44,6 +44,9 @@ INSTALLED_APPS = [
 
     # For django form styling
     'widget_tweaks',
+
+    # TinyMCE
+    'tinymce',
 ]
 
 MIDDLEWARE = [
@@ -145,3 +148,49 @@ MEDIA_URL = '/media/'
 LOGIN_URL = "/log-in"
 LOGIN_REDIRECT_URL = "/articles"
 REDIRECT_AUTHENTICATED_USER = True
+
+
+
+
+
+
+
+
+
+TINYMCE_DEFAULT_CONFIG = {
+    # 'width': 700,
+    # 'height': 500,
+    # 'cleanup_on_startup': True,
+    # 'custom_undo_redo_levels': 20,
+    # 'selector': 'textarea',
+    # 'theme': 'modern',
+    # 'plugins': '''
+    #         textcolor save link image media preview codesample contextmenu
+    #         table code lists fullscreen  insertdatetime  nonbreaking
+    #         contextmenu directionality searchreplace wordcount visualblocks
+    #         visualchars code fullscreen autolink lists  charmap print  hr
+    #         anchor pagebreak
+    #         ''',
+    # 'toolbar1': '''
+    #         fullscreen preview bold italic underline | fontselect,
+    #         fontsizeselect  | forecolor backcolor | alignleft alignright |
+    #         aligncenter alignjustify | indent outdent | bullist numlist table |
+    #         | link image media | codesample |
+    #         ''',
+    # 'contextmenu': 'formats | link image',
+    # 'menubar': True,
+    # 'statusbar': True,
+
+    'height': 500,
+    'menubar': False,
+    'plugins': [
+        'advlist autolink lists link image charmap codesample print preview anchor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table textcolor paste code help wordcount'
+    ],
+    'toolbar': 'undo redo searchreplace | formatselect | ' +
+    'bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify |' +
+    'outdent indent | bullist numlist |' +
+    'removeformat | link image tinydrive codesample | fullscreen wordcount help',
+    'content_style': 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+    }

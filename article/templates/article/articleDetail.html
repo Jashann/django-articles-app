@@ -19,9 +19,13 @@
 
     <h1 class="pt-5 text-center">{{article.title}}</h1>
 
-    <strong class="text-uppercase"> Created by: <a href="{% url 'user.user_profile' article.user.username %}">{{article.user.username}}</a></strong>
+    <div class="my-5">
+        <strong class="text-uppercase"> Created by: <a href="{% url 'user.user_profile' article.user.username %}">{{article.user.username}}</a></strong>
+    </div>
     
-    <p>{{article.body|linebreaks}}</p>
+    {% comment %} <p>{{article.body|linebreaks}}</p> {% endcomment %}
+
+    {{article.body|safe}}
 
      <div class='mt-5'>
         {% if user.id == article.user.id %}
@@ -53,7 +57,7 @@
 
 <div id="reviews" class="bg-success p-5 rounded-3 text-light">
 
-    <h1 class="text-light">Reviews</h1>
+    <h1 class="text-light">Discuss</h1>
 
     {% if user.is_authenticated %}    
         <form action="{% url 'article.submit_review' %}" method="post" class="mt-2 mb-5">
@@ -67,20 +71,30 @@
                 </div>
             {% endif %}
 
-            <h2 class="mt-5 mb-3 text-light">Write a review</h2>
+            <h2 class="mt-5 mb-3 text-light">What do you think of the article?</h2>
 
             <div class="form-group mb-2">
                 <input name="reviewTitle" type="text" class="form-control" id="reviewTitle" placeholder="Title">
             </div>
 
             <div class="form-group">
-                <textarea name="reviewBody" class="form-control rounded-3" id="reviewBody" rows="5" spellcheck="false" data-ms-editor="true" placeholder="Share what you think about the article in detail..." ></textarea>
+                <textarea name="reviewBody" class="form-control rounded-3" id="reviewBody" rows="5" spellcheck="false" data-ms-editor="true" placeholder="Share in detail." ></textarea>
             </div>
 
             <input type="hidden" name="articleID" value="{{article.id}}">
 
             <button type="submit" class="btn btn-light rounded-pill mt-2 fw-bolder">Submit</button>
         </form>
+
+    {% else %}
+        <div class="review bg-info card text-light rounded-20 p-3 mt-4 text-center">
+            <p class="lead fw-bolder">
+                You need to login to join the discussion.
+            </p>
+            <div>
+                <a class='btn btn-light text-dark rounded-pill' href="{% url 'user.log-in' %}">Login Here</a>
+            </div>
+        </div>
     {% endif %}
 
     {% for review in reviews %}

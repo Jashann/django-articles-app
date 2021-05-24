@@ -83,7 +83,6 @@ def logInUser(request):
     else:
         return render(request, "user/log-in.html")
 
-@login_required
 def userProfile(request, username):
     user = User.objects.get(username=username)
     articles = Article.objects.filter(user=user)

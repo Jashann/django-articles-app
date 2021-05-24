@@ -12,9 +12,10 @@
     <title>Thoughts - {% block title %} {% endblock %}</title>
   </head>
   <body>
+
     <nav class="navbar mb-5 navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-        <a href="/" class="navbar-brand">
+        <a href="/" class="navbar-brand mb-5 mb-md-0">
           <img
             id="logo"
             src="{% static 'base/logo.png' %}"
@@ -23,8 +24,9 @@
           />
         </a>
 
+
         <button
-          class="navbar-toggler"
+          class="navbar-toggler mb-5 mb-md-0"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarColor03"
@@ -36,42 +38,50 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarColor03">
+
+          <form class="d-flex mb-2 mb-md-0">
+            <input class="form-control me-2 mb-md-0" type="text" placeholder="Search Title or Author" spellcheck="false" data-ms-editor="true">
+            <button class="btn btn-secondary" type="submit">
+              <i class="fa fa-search" aria-hidden="true"></i>  
+            </button>
+        </form>
+
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
+            <li class="nav-item mb-2 mb-md-0">
               <a class="nav-link text-center active" href="/">Home </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item mb-2 mb-md-0">
               <a class="nav-link text-center active" href="/articles"
                 >Articles</a
               >
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item mb-2 mb-md-0">
               <a class="nav-link text-center text-light bg-info" href="/article/create"
                 >Create Article</a
               >
             </li>
 
             {% if user.is_authenticated %}
-              <li class="nav-item dropdown dropstart me-3">
+              <li class="nav-item mb-2 mb-md-0 dropdown dropstart me-3">
                 <img src="{% static 'base/person.svg' %}" class="nav-link dropdown-toggle person" id="person-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" /> 
                 <ul class="dropdown-menu" aria-labelledby="person-dropdown">
                   
                   <li>
-                    <a href="{% url 'user.user_profile' user.username %}" class="dropdown-item text-white bg-info fw-bolder">My Profile, {{user.username | upper}} </a>
+                    <a href="{% url 'user.user_profile' user.username %}" class="dropdown-item mb-2 mb-md-0 text-white bg-info fw-bolder">My Profile, {{user.username | upper}} </a>
                   </li>
 
                   <li>
                     <form action="/log-out/" method="post">
                         {% csrf_token %}
-                        <input class="dropdown-item"  type="submit" value="Log out" />
+                        <input class="dropdown-item mb-2 mb-md-0"  type="submit" value="Log out" />
                     </form>
                   </li>
 
                 </ul>
             </li>
             {% else %}
-              <li class="nav-item">
+              <li class="nav-item mb-2 mb-md-0">
                 <a class="nav-link bg-success text-light text-center active" href="/log-in">Login</a>
               </li>
             {% endif %}

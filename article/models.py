@@ -1,4 +1,5 @@
 from django.db import models
+from tinymce import HTMLField
 
 # For user relationship with reviews
 from django.contrib.auth.models import User
@@ -7,7 +8,8 @@ from django.contrib.auth.models import User
 class Article(models.Model):
     title = models.CharField(max_length=256)
     cover_image = models.ImageField(upload_to="article/images/")
-    body = models.TextField(null=True)
+    # body = models.TextField(null=True)
+    body = HTMLField()
 
     modifiedAt = models.DateTimeField(auto_now=True, null=True)
     createdAt = models.DateTimeField(auto_now_add=True, null=True)
