@@ -39,12 +39,12 @@
 
         <div class="collapse navbar-collapse" id="navbarColor03">
 
-          <form class="d-flex mb-2 mb-md-0">
-            <input class="form-control me-2 mb-md-0" type="text" placeholder="Search Title or Author" spellcheck="false" data-ms-editor="true">
+          <form method='GET' action="{% url 'article.article_search' %}" class="d-flex mb-2 mb-md-0">
+            <input name="searchText" class="form-control me-2 mb-md-0" type="text" placeholder="Search Title or Author" spellcheck="false" data-ms-editor="true">
             <button class="btn btn-secondary" type="submit">
               <i class="fa fa-search" aria-hidden="true"></i>  
             </button>
-        </form>
+          </form>
 
           <ul class="navbar-nav ms-auto">
             <li class="nav-item mb-2 mb-md-0">
@@ -113,5 +113,9 @@
       integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ"
       crossorigin="anonymous"
     ></script>
+
+    
+
+{% comment %} Taken from 'https://stackoverflow.com/questions/50365291/auto-closing-bootstrap-alerts-after-form-submission' {% endcomment %}
   </body>
 </html>

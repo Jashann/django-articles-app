@@ -1,4 +1,3 @@
-from django.http.response import Http404
 from article.models import Article, Review
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
@@ -95,3 +94,4 @@ def userProfile(request, username):
     }
 
     return render(request, "user/profile.html", context)
+

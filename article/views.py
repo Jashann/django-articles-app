@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+import article
 from django.http.response import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Article, Review
@@ -24,19 +26,19 @@ def index(request):
 
 def articles(request):
 
-    articles = Article.objects.all().order_by("-createdAt")
+    articlesAll = Article.objects.all().order_by("-createdAt")
 
     # Pagination
-    paginator = Paginator(articles, 3)
+    paginator = Paginator(articlesAll, 3)
 
     page_number = request.GET.get("page")
 
-    page_obj = paginator.get_page(page_number)
+    articles = paginator.get_page(page_number)
 
-    totalNum = page_obj.paginator.num_pages
+    totalNum = articles.paginator.num_pages
 
     context = {
-        "page_obj": page_obj,
+        "articles": articles,
         "range": range(1, totalNum+1),
     }
 
@@ -63,6 +65,40 @@ def articleDetail(request, article_id):
     request.session['count'] = 1
 
     return render(request, "article/articleDetail.html", context)
+
+
+def articleSearch(request):
+    searchText = request.GET['searchText']
+
+    articlesAll = Article.objects.filter(title__contains = searchText)
+
+    users = User.objects.filter(username__contains = searchText)
+
+    print(users)
+    for user in users:
+        userArticles = Article.objects.filter(user=user)
+        articlesAll = articlesAll.union(userArticles)
+
+    # articlesAll = articles.union(articlesOfUsers)
+
+
+    # Pagination
+    paginator = Paginator(articlesAll, 6)
+
+    page_number = request.GET.get("page")
+
+    articles = paginator.get_page(page_number)
+
+    totalNum = articles.paginator.num_pages
+
+    context = {
+        "articles": articles,
+        "range": range(1, totalNum+1),
+    }
+
+    return render(request, "article/articles.html", context)
+    
+
 
 
 # @login_required 

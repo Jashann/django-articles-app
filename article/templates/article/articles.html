@@ -1,60 +1,58 @@
 {% extends 'base/base.html' %} {% block title %} Articles {% endblock title %}
 {% block content %}
 
-<div class="row">
-  {% for article in page_obj %}
+ <div class="row">
+  {% for article in articles %}
   <div class="col-12 col-md-4">
-
-    <div class="card rounded-3 mb-4">
+      <div class="card rounded-3 mb-4">
       <img
-        src="{{article.cover_image.url}}"
-        class="card-img-top"
-        alt="{{article.title}}" />
-
+          src="{{article.cover_image.url}}"
+          class="card-img-top"
+          alt="{{article.title}}"
+      />
       <div class="card-body">
-        <h4 class="text-center">{{article.title|truncatewords:20 }}</h4>
-
-        <div class="text-center">
-
-          {% if user.id == article.user.id %}
-            <a
+          <h4 class="card-title text-center">
+          {{article.title|truncatewords:20 }}
+          </h4>
+          <div class="text-center mt-5 mb-4">
+              {% if user.id == article.user.id %}
+              <a
               href="{% url 'article.article_update' article.id  %}"
               class="btn btn-warning rounded-pill">
               Edit
-            </a>
+              </a>
           {% endif %}
 
           <a
-            href="{% url 'article.article_detail' article.id  %}"
-            class="btn btn-success rounded-pill">
-            Read Now
+              href="{% url 'article.article_detail' article.id  %}"
+              class="btn btn-success rounded-pill">
+              Read Now
           </a>
 
           {% if user.id == article.user.id %}
-            <a
+              <a
               href="{% url 'article.article_delete' article.id  %}"
               class="btn btn-danger rounded-pill">
               Delete
-            </a>
+              </a>
           {% endif %}
 
-        </div>
+          </div>
       </div>
 
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          <small> Created At: {{article.createdAt}} -- {{admin}} </small>
-        </li>
-        <li class="list-group-item">
-          <small> Last Modified At: {{article.modifiedAt}} </small>
-        </li>
-      <li class="list-group-item">
-          <small> Created by: <a class="text-capitalize fw-bolder" href="{% url 'user.user_profile' article.user.username %}"> {{article.user.username}} </a>
-          </small>
-      </li>
-
+          <li class="list-group-item">
+              <small> Created At: {{article.createdAt}} </small>
+          </li>
+          <li class="list-group-item">
+              <small> Last Modified At: {{article.modifiedAt}} </small>
+          </li>
+          <li class="list-group-item">
+              <small> Created by: <a class="text-capitalize fw-bolder" href="{% url 'user.user_profile' article.user.username %}"> {{article.user.username}} </a>
+              </small>
+          </li>
       </ul>
-    </div>
+      </div>
   </div>
   {% endfor %}
 </div>
