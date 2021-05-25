@@ -33,7 +33,7 @@
             <h2 class='text-center mb-5'> <span class="text-capitalize">{{userProfile.username}}</span> have {{articles.count}} article{{articles.count|pluralize}}</h2>
 
             <div class="row">
-            {% for article in articles %}
+                {% for article in articles %}
                 <div class="col-12 col-md-6">
                     <div class="card rounded-3 mb-4">
                     <img
@@ -45,48 +45,47 @@
                         <h4 class="card-title text-center">
                         {{article.title|truncatewords:20 }}
                         </h4>
-                        <div class="text-center">
-
+                        <div class="text-center mt-5 mb-4">
                             {% if user.id == article.user.id %}
-                                <a
-                                href="{% url 'article.article_update' article.id  %}"
-                                class="btn btn-warning rounded-pill">
-                                Edit Article
-                                </a>
-                            {% endif %}
-
                             <a
-                                href="{% url 'article.article_detail' article.id  %}"
-                                class="btn btn-success rounded-pill"
-                                >Read</a
-                            >
+                            href="{% url 'article.article_update' article.id  %}"
+                            class="btn btn-warning rounded-pill">
+                            Edit
+                            </a>
+                        {% endif %}
 
-                            {% if user.id == article.user.id %}
-                                <a
-                                href="{% url 'article.article_delete' article.id  %}"
-                                class="btn btn-danger rounded-pill">
-                                Delete Article
-                                </a>
-                            {% endif %}
-                        
+                        <a
+                            href="{% url 'article.article_detail' article.id  %}"
+                            class="btn btn-success rounded-pill">
+                            Read Now
+                        </a>
+
+                        {% if user.id == article.user.id %}
+                            <a
+                            href="{% url 'article.article_delete' article.id  %}"
+                            class="btn btn-danger rounded-pill">
+                            Delete
+                            </a>
+                        {% endif %}
+
                         </div>
                     </div>
 
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                        <small> Created At: {{article.createdAt}} -- {{admin}} </small>
+                            <small> Created At: {{article.createdAt}} </small>
                         </li>
                         <li class="list-group-item">
-                        <small> Last Modified At: {{article.modifiedAt}} </small>
+                            <small> Last Modified At: {{article.modifiedAt}} </small>
                         </li>
                         <li class="list-group-item">
-                            <small> Created by: <a class="text-capitalize fw-bolder" href="/user/{{article.user.username}}"> {{article.user.username}} </a>
+                            <small> Created by: <a class="text-capitalize fw-bolder" href="{% url 'user.user_profile' article.user.username %}"> {{article.user.username}} </a>
                             </small>
                         </li>
                     </ul>
                     </div>
                 </div>
-            {% endfor %}
+                {% endfor %}
             </div>
 
         </div>

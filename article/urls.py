@@ -4,6 +4,10 @@ from . import views
 urlpatterns = [
     path("", views.index),
     path("articles/", views.articles, name="article.articles"),
+
+    #Search
+    path("articles/search", views.articleSearch, name="article.article_search"),
+
     path("article/create", views.ArticleCreateView.as_view(), name="article.create_article"),
     path("article/<int:article_id>", views.articleDetail, name="article.article_detail"),
 

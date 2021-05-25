@@ -4,6 +4,7 @@ from .models import Article, Review
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
 
 # EDITING AND DELETING ARTICLE IMPORT - CLASS BASED VIEWS
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -31,12 +32,12 @@ def articles(request):
 
     page_number = request.GET.get("page")
 
-    page_obj = paginator.get_page(page_number)
+    articles = paginator.get_page(page_number)
 
-    totalNum = page_obj.paginator.num_pages
+    totalNum = articles.paginator.num_pages
 
     context = {
-        "page_obj": page_obj,
+        "articles": articles,
         "range": range(1, totalNum+1),
     }
 
@@ -63,6 +64,36 @@ def articleDetail(request, article_id):
     request.session['count'] = 1
 
     return render(request, "article/articleDetail.html", context)
+
+def articleSearch(request):
+    searchText = request.GET['searchText']
+    
+    articles = Article.objects.filter(title__contains=searchText)
+
+    users = User.objects.filter(username__contains=searchText)
+
+    for user in users:
+        userArticles = Article.objects.filter(user=user)
+        articles = articles.union(userArticles)
+
+     # Pagination
+    paginator = Paginator(articles, 3)
+
+    page_number = request.GET.get("page")
+
+    articles = paginator.get_page(page_number)
+
+    totalNum = articles.paginator.num_pages
+
+    context = {
+        "articles": articles,
+        "range": range(1, totalNum+1),
+    }
+
+    return render(request, "article/articles.html", context)
+
+
+
 
 
 # @login_required 

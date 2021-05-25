@@ -39,8 +39,8 @@
 
         <div class="collapse navbar-collapse" id="navbarColor03">
 
-          <form class="d-flex mb-2 mb-md-0">
-            <input class="form-control me-2 mb-md-0" type="text" placeholder="Search Title or Author" spellcheck="false" data-ms-editor="true">
+          <form action='{% url 'article.article_search' %}' method="GET" class="d-flex mb-2 mb-md-0">
+            <input name='searchText' class="form-control me-2 mb-md-0" type="text" placeholder="Search Title or Author" spellcheck="false" data-ms-editor="true">
             <button class="btn btn-secondary" type="submit">
               <i class="fa fa-search" aria-hidden="true"></i>  
             </button>
