@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-import article
 
 urlpatterns = [
     path("", views.index),
@@ -13,9 +12,6 @@ urlpatterns = [
     path("article/<int:pk>/delete", views.ArticleDeleteView.as_view(), name="article.article_delete"),
 
     path("article/submit-review", views.submitReview, name="article.submit_review" ),
-
-    # Search
-    path('articles/search', views.articleSearch, name="article.article_search"),
 
     # Review
     path("article/review/<int:pk>/edit", views.reviewUpdate, name="article.review_update"),
