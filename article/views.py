@@ -1,23 +1,31 @@
 from django.http.response import Http404
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Article, Review
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 
+from article.models import Article, Review, Bookmark 
+
 # EDITING AND DELETING ARTICLE IMPORT - CLASS BASED VIEWS
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from article.models import Article
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 
 # Create your views here.
 def index(request):
     articles = Article.objects.filter(featured=True).order_by("-createdAt")
+    bookmarked = []
 
+    if request.user.is_authenticated:
+        for article in articles:
+            bookmarkObject = Bookmark.objects.filter(article=article, user = request.user)
+            if bookmarkObject:
+                bookmarked.append(article.id)
+    
     context = {
-        "articles": articles
+        'articles': articles,
+        'bookmarked': bookmarked
     }
 
     return render(request, "article/index.html", context)
@@ -26,6 +34,8 @@ def index(request):
 def articles(request):
 
     articles = Article.objects.all().order_by("-createdAt")
+
+    bookmarked = []
 
     # Pagination
     paginator = Paginator(articles, 3)
@@ -36,9 +46,16 @@ def articles(request):
 
     totalNum = articles.paginator.num_pages
 
+    if request.user.is_authenticated:
+        for article in articles:
+            bookmarkObject = Bookmark.objects.filter(article=article, user = request.user)
+            if bookmarkObject:
+                bookmarked.append(article.id)
+
     context = {
         "articles": articles,
         "range": range(1, totalNum+1),
+        'bookmarked': bookmarked
     }
 
 
@@ -48,11 +65,19 @@ def articles(request):
 def articleDetail(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
 
+    bookmarked = False
+
+    if request.user.is_authenticated:
+        bookmarkObject = Bookmark.objects.filter(article=article, user = request.user)
+        if bookmarkObject:
+            bookmarked = True
+
     reviews = Review.objects.filter(article = article).order_by("-createdAt")
 
     context = {
         "article": article,
-        "reviews": reviews
+        "reviews": reviews,
+        'bookmarked': bookmarked
     }
 
     # To get rid of error of review passed in below function
@@ -72,6 +97,8 @@ def articleSearch(request):
 
     users = User.objects.filter(username__contains=searchText)
 
+    bookmarked = []
+
     for user in users:
         userArticles = Article.objects.filter(user=user)
         articles = articles.union(userArticles)
@@ -85,9 +112,16 @@ def articleSearch(request):
 
     totalNum = articles.paginator.num_pages
 
+    if request.user.is_authenticated:
+        for article in articles:
+            bookmarkObject = Bookmark.objects.filter(article=article, user = request.user)
+            if bookmarkObject:
+                bookmarked.append(article.id)
+
     context = {
         "articles": articles,
         "range": range(1, totalNum+1),
+        'bookmarked': bookmarked
     }
 
     return render(request, "article/articles.html", context)
@@ -214,3 +248,20 @@ class ReviewDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse("user.user_profile", kwargs={'username': self.request.user.username}) 
+
+@login_required
+def bookmark(request,pk):
+    user = request.user
+    article = Article.objects.get(pk=pk)
+
+    bookmarkObject = Bookmark.objects.filter(article=article, user=user)
+
+    if bookmarkObject:
+        bookmarked = bookmarkObject[0]
+        bookmarked.delete()
+    else:
+        Bookmark.objects.create(user=user, article=article)
+
+    htmlID = "#"+ str(article.id)
+
+    return redirect(request.META['HTTP_REFERER'] + htmlID)

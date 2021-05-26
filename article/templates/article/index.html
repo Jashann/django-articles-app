@@ -13,38 +13,56 @@
         <div class="row">
             {% for article in articles %}
             <div class="col-12 col-md-6">
-                <div class="card rounded-3 mb-4">
-                <img
-                    src="{{article.cover_image.url}}"
-                    class="card-img-top"
-                    alt="{{article.title}}"
-                />
+                <div class="card rounded-3 mb-4" id="{{article.id}}">
+                    <div class='article-image-container'>
+                        <img
+                            src="{{article.cover_image.url}}"
+                            class="card-img-top"
+                            alt="{{article.title}}"
+                        />
+                        <form action="{% url 'article.bookmark' article.id %}" method="POST">
+                            {% csrf_token %}
+
+                            {% if article.id in bookmarked %}
+                                <button type="submit" class='btn'>
+                                    <i class="fas fa-heart fa-3x text-danger"></i>
+                                </button>
+                            {% else %}
+                                <button type="submit" class='btn'>
+                                    <i class="fas fa-heart fa-3x text-light"></i>
+                                </button>
+                            {% endif %}
+
+                        </form>
+                    </div>
+
                 <div class="card-body">
                     <h4 class="card-title text-center">
                     {{article.title|truncatewords:20 }}
                     </h4>
-                    <div class="text-center mt-5 mb-4">
+                    <div class="text-center mt-5 mb-3">
+
                         {% if user.id == article.user.id %}
                         <a
                         href="{% url 'article.article_update' article.id  %}"
                         class="btn btn-warning rounded-pill">
                         Edit
                         </a>
-                    {% endif %}
+                        {% endif %}
 
-                    <a
-                        href="{% url 'article.article_detail' article.id  %}"
-                        class="btn btn-success rounded-pill">
-                        Read Now
-                    </a>
-
-                    {% if user.id == article.user.id %}
                         <a
-                        href="{% url 'article.article_delete' article.id  %}"
-                        class="btn btn-danger rounded-pill">
-                        Delete
+                            href="{% url 'article.article_detail' article.id  %}"
+                            class="btn btn-success rounded-pill">
+                            Read Now
                         </a>
-                    {% endif %}
+
+                        {% if user.id == article.user.id %}
+                            <a
+                            href="{% url 'article.article_delete' article.id  %}"
+                            class="btn btn-danger rounded-pill">
+                            Delete
+                            </a>
+                        {% endif %}
 
                     </div>
                 </div>

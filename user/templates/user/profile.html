@@ -7,6 +7,7 @@
     <div class="p-5 mb-4 bg-light">
         <h1>Quick Links</h1>
         <nav class="nav mt-3">
+             <a class="nav-link active bg-success text-light me-2" aria-current="page" href="#favorites">Favorites <i class="fas fa-arrow-down"></i> </a>
             <a class="nav-link active bg-success text-light me-2" aria-current="page" href="#articles" >Articles <i class="fas fa-arrow-down"></i> </a>
             <a class="nav-link active bg-success text-light me-2" aria-current="page" href="#reviews">Reviews <i class="fas fa-arrow-down"></i> </a>
         </nav>
@@ -15,7 +16,7 @@
 
     <div class="profile">
 
-        <div class="profile-info rounded-3 row align-items-center bg-info p-5">
+        <div id="profile-info" class="profile-info rounded-3 row align-items-center bg-info p-5">
             <div class="col-md-4">
                 {% load static %}
                 <img src="{% static 'base/person.svg' %}" alt="Avatar">
@@ -29,40 +30,61 @@
             </div>
         </div>
 
-        <div id="articles" class="profile-articles rounded-3 row align-items-center bg-light p-5 mt-5">
-            <h2 class='text-center mb-5'> <span class="text-capitalize">{{userProfile.username}}</span> have {{articles.count}} article{{articles.count|pluralize}}</h2>
+        <div id="favorites" class="profile-articles rounded-3 row align-items-center p-5 mt-5">
+            <h2 class='text-center text-light mb-5'> <span class="text-capitalize">{{userProfile.username}}</span> have {{bookmarkedArticles.count}} favorite article{{bookmarkedArticles.count|pluralize}}
+            <i class='fas fa-heart text-danger'></i>
+            </h2>
 
             <div class="row">
-                {% for article in articles %}
+                {% for bookmarkedArticle in bookmarkedArticles %}
                 <div class="col-12 col-md-6">
                     <div class="card rounded-3 mb-4">
-                    <img
-                        src="{{article.cover_image.url}}"
-                        class="card-img-top"
-                        alt="{{article.title}}"
-                    />
+        
+                    <div class='article-image-container'>
+                        <img
+                            src="{{bookmarkedArticle.article.cover_image.url}}"
+                            class="card-img-top"
+                            alt="{{bookmarkedArticle.article.title}}"
+                        />
+                        <form action="{% url 'article.bookmark' bookmarkedArticle.article.id %}" method="POST">
+                            {% csrf_token %}
+
+                            {% if bookmarkedArticle.article.id in bookmarked %}
+                                <button type="submit" class='btn'>
+                                    <i class="fas fa-heart fa-3x text-danger"></i>
+                                </button>
+                            {% else %}
+                                <button type="submit" class='btn'>
+                                    <i class="fas fa-heart fa-3x text-light"></i>
+                                </button>
+                            {% endif %}
+
+                        </form>
+                    </div>
+
+
                     <div class="card-body">
                         <h4 class="card-title text-center">
-                        {{article.title|truncatewords:20 }}
+                        {{bookmarkedArticle.article.title|truncatewords:20 }}
                         </h4>
                         <div class="text-center mt-5 mb-4">
-                            {% if user.id == article.user.id %}
+                            {% if user.id == bookmarkedArticle.article.user.id %}
                             <a
-                            href="{% url 'article.article_update' article.id  %}"
+                            href="{% url 'article.article_update' bookmarkedArticle.article.id  %}"
                             class="btn btn-warning rounded-pill">
                             Edit
                             </a>
                         {% endif %}
 
                         <a
-                            href="{% url 'article.article_detail' article.id  %}"
+                            href="{% url 'article.article_detail' bookmarkedArticle.article.id  %}"
                             class="btn btn-success rounded-pill">
                             Read Now
                         </a>
 
-                        {% if user.id == article.user.id %}
+                        {% if user.id == bookmarkedArticle.article.user.id %}
                             <a
-                            href="{% url 'article.article_delete' article.id  %}"
+                            href="{% url 'article.article_delete' bookmarkedArticle.article.id  %}"
                             class="btn btn-danger rounded-pill">
                             Delete
                             </a>
@@ -73,18 +95,97 @@
 
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                            <small> Created At: {{article.createdAt}} </small>
+                            <small> Created At: {{bookmarkedArticle.article.createdAt}} </small>
                         </li>
                         <li class="list-group-item">
-                            <small> Last Modified At: {{article.modifiedAt}} </small>
+                            <small> Last Modified At: {{bookmarkedArticle.article.modifiedAt}} </small>
                         </li>
                         <li class="list-group-item">
-                            <small> Created by: <a class="text-capitalize fw-bolder" href="{% url 'user.user_profile' article.user.username %}"> {{article.user.username}} </a>
+                            <small> Created by: <a class="text-capitalize fw-bolder" href="{% url 'user.user_profile' bookmarkedArticle.article.user.username %}"> {{bookmarkedArticle.article.user.username}} </a>
                             </small>
                         </li>
                     </ul>
                     </div>
                 </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+        <div id="articles" class="profile-articles rounded-3 row align-items-center bg-light p-5 mt-5">
+            <h2 class='text-center mb-5'> <span class="text-capitalize">{{userProfile.username}}</span> have {{articles.count}} article{{articles.count|pluralize}}</h2>
+
+            <div class="row">
+                {% for article in articles %}
+                    <div class="col-12 col-md-6">
+                        <div class="card rounded-3 mb-4" id="{{article.id}}">
+                            <div class='article-image-container'>
+                                <img
+                                    src="{{article.cover_image.url}}"
+                                    class="card-img-top"
+                                    alt="{{article.title}}"
+                                />
+                                <form action="{% url 'article.bookmark' article.id %}" method="POST">
+                                    {% csrf_token %}
+
+                                    {% if article.id in bookmarked %}
+                                        <button type="submit" class='btn'>
+                                            <i class="fas fa-heart fa-3x text-danger"></i>
+                                        </button>
+                                    {% else %}
+                                        <button type="submit" class='btn'>
+                                            <i class="fas fa-heart fa-3x text-light"></i>
+                                        </button>
+                                    {% endif %}
+
+                                </form>
+                            </div>
+
+                        <div class="card-body">
+                            <h4 class="card-title text-center">
+                            {{article.title|truncatewords:20 }}
+                            </h4>
+                            <div class="text-center mt-5 mb-3">
+
+                                {% if user.id == article.user.id %}
+                                <a
+                                href="{% url 'article.article_update' article.id  %}"
+                                class="btn btn-warning rounded-pill">
+                                Edit
+                                </a>
+                                {% endif %}
+
+                                <a
+                                    href="{% url 'article.article_detail' article.id  %}"
+                                    class="btn btn-success rounded-pill">
+                                    Read Now
+                                </a>
+
+                                {% if user.id == article.user.id %}
+                                    <a
+                                    href="{% url 'article.article_delete' article.id  %}"
+                                    class="btn btn-danger rounded-pill">
+                                    Delete
+                                    </a>
+                                {% endif %}
+
+                            </div>
+                        </div>
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <small> Created At: {{article.createdAt}} </small>
+                            </li>
+                            <li class="list-group-item">
+                                <small> Last Modified At: {{article.modifiedAt}} </small>
+                            </li>
+                            <li class="list-group-item">
+                                <small> Created by: <a class="text-capitalize fw-bolder" href="{% url 'user.user_profile' article.user.username %}"> {{article.user.username}} </a>
+                                </small>
+                            </li>
+                        </ul>
+                        </div>
+                    </div>
                 {% endfor %}
             </div>
 
@@ -111,7 +212,7 @@
                 
                     <p>{{review.body}}</p>
 
-                    <div class="border border-1 border-success rounded-20 p-3">
+                    <div class="rounded-20 p-3">
                         <h5>Article Info</h3>
                         <h6>Title: {{review.article.title}}</h4>
                         <small class="d-block">Created by: <a class="text-capitalize"  href="{% url 'user.user_profile' review.article.user.username %}">{{review.article.user.username}}</a></small>

@@ -19,6 +19,8 @@ urlpatterns = [
 
     # Review
     path("article/review/<int:pk>/edit", views.reviewUpdate, name="article.review_update"),
-    path("article/review/<int:pk>/delete", views.ReviewDeleteView.as_view(), name="article.review_delete")
+    path("article/review/<int:pk>/delete", views.ReviewDeleteView.as_view(), name="article.review_delete"),
     
+    # Bookark
+    path('article/<int:pk>/bookmark', views.bookmark, name="article.bookmark")
 ]

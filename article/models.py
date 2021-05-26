@@ -35,3 +35,12 @@ class Review(models.Model):
     def __str__(self):
         return self.title
     
+
+class Bookmark(models.Model):
+    # Relationship -> one to many
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+
+    def __str__(self):
+        username = self.user.username
+        return username.upper() + " ------ " + self.article.title

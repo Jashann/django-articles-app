@@ -19,8 +19,22 @@
 
     <h1 class="pt-5 text-center">{{article.title}}</h1>
 
-    <div class="my-5">
+    <div class="my-5 d-flex align-items-center">
         <strong class="text-uppercase"> Created by: <a href="{% url 'user.user_profile' article.user.username %}">{{article.user.username}}</a></strong>
+         <form action="{% url 'article.bookmark' article.id %}" method="POST">
+            {% csrf_token %}
+
+            {% if bookmarked %}
+                <button type="submit" class='btn'>
+                    <i class="fas fa-heart fa-3x text-danger"></i>
+                </button>
+            {% else %}
+                <button type="submit" class='btn'>
+                    <i class="fas fa-heart fa-3x text-dark"></i>
+                </button>
+            {% endif %}
+
+        </form>
     </div>
     
     {% comment %} <p>{{article.body|linebreaks}}</p> {% endcomment %}
