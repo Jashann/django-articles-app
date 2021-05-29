@@ -100,6 +100,10 @@ body {
   text-shadow: 0 0 6px #000000;
 }
 
+footer a{
+  text-decoration: none !important;
+}
+
 @media screen and (max-width: 768px) {
   .profile .border-end {
     border: 0px !important;
