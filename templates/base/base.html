@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     {% load static %}
+
+    <link rel="icon" href="{% static 'base/favicon.ico' %}" type="image/x-icon"/>
+    <link rel="shortcut icon" href="{% static 'base/favicon.ico' %}" type="image/x-icon"/>
+
     <link rel="stylesheet" href="{% static 'base/bootstrap.css' %}" />
     <link rel="stylesheet" href="{% static 'base/style.css' %}" />
 
@@ -82,7 +86,7 @@
             </li>
             {% else %}
               <li class="nav-item mb-2 mb-md-0">
-                <a class="nav-link bg-success text-light text-center active" href="/log-in">Login</a>
+                <a class="nav-link bg-success text-light text-center active" href="{% url 'login' %}">Login</a>
               </li>
             {% endif %}
 
@@ -97,8 +101,7 @@
   <!-- Footer -->
   <footer class="text-center text-lg-start bg-light text-muted mt-5">
     <!-- Section: Social media -->
-    <section
-      class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"
+    <section id='connect' class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"
     >
       <!-- Left -->
       <div class="me-5 d-none d-lg-block">

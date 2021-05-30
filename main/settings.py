@@ -32,13 +32,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
     'article',
     'user',
 
@@ -47,6 +40,14 @@ INSTALLED_APPS = [
 
     # TinyMCE
     'tinymce',
+
+
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
 ]
 
 MIDDLEWARE = [
@@ -145,12 +146,19 @@ MEDIA_URL = '/media/'
 
 
 # For authentication
-LOGIN_URL = "/log-in"
+LOGIN_URL = "/accounts/login"
 LOGIN_REDIRECT_URL = "/articles"
 REDIRECT_AUTHENTICATED_USER = True
 
+# PASSWORD RESET EMAIL
+# config/settings.py
 
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'anything3592@gmail.com'
+EMAIL_HOST_PASSWORD = 'nopasswordpublic'
 
 
 

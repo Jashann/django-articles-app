@@ -104,3 +104,5 @@ def userProfile(request, username):
     }
 
     return render(request, "user/profile.html", context)
+
+

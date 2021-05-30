@@ -1,0 +1,25 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Password reset on localhost:8000
+From: webmaster@localhost
+To: jashanjot0008@gmail.com
+Date: Sun, 30 May 2021 06:34:50 -0000
+Message-ID: <162235649009.6856.13032296420024917794@DESKTOP-PTOMAP7>
+
+
+You're receiving this email because you requested a password reset for your user account at localhost:8000.
+
+Please go to the following page and choose a new password:
+
+http://localhost:8000/accounts/reset/Mg/angmw2-1e0ea1d8cf37d0bef055639f1705299d/
+
+Your username, in case you’ve forgotten: jashan
+
+Thanks for using our site!
+
+The localhost:8000 team
+
+
+
+-------------------------------------------------------------------------------

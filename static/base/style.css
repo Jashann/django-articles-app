@@ -104,6 +104,10 @@ footer a{
   text-decoration: none !important;
 }
 
+#connect {
+  background: rgb(0 0 0 / 10%)
+}
+
 @media screen and (max-width: 768px) {
   .profile .border-end {
     border: 0px !important;

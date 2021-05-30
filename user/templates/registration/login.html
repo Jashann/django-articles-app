@@ -1,0 +1,45 @@
+{% extends 'base/base.html' %} 
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+
+    <div class='row justify-content-center'>
+        <div class="col-12 col-md-6">
+            <form action="" method='POST' class="bg-light rounded-3 p-5">
+                {% csrf_token %}
+                {% load widget_tweaks %}
+
+                <h1 class="text-center text-success">Login</h1>
+
+                {% if form.errors %}
+                    <div class="alert alert-dismissible alert-danger mt-3">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        Invalid username or password
+                    </div>
+                {% endif %}
+                
+
+                <div class="form-group">
+                    <label class='form-label mt-4' for="username">Username: </label>
+                    {{ form.username | add_class:'form-control rounded-pill' }}
+                </div>
+
+                <div class="form-group">
+                    <label class='form-label mt-4' for="username">Password: </label>
+                    {{ form.password | add_class:'form-control rounded-pill' }}
+                </div>
+
+                <button type="submit" class="btn btn-success rounded-pill my-4 w-100"> Login </button>
+
+
+                <h4 class="text-success">Don't have an account ? </h4>
+                <a href="/sign-up" class="btn btn-light fw-bold">Create Now</a>
+
+                <h5 class="text-danger mt-3">Forgot your password ? </h5>
+                <a target="_blank" href="{% url 'password_reset' %}" class="btn btn-light text-danger fw-bold">Reset Now</a>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

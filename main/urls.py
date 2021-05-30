@@ -24,7 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("article.urls")),
     path("", include("user.urls")),
-    url(r'^tinymce/', include('tinymce.urls'))
+    url(r'^tinymce/', include('tinymce.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 # for image uploading
