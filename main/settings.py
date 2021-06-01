@@ -153,11 +153,11 @@ REDIRECT_AUTHENTICATED_USER = True
 # PASSWORD RESET EMAIL
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'anything3592@gmail.com'
-EMAIL_HOST_PASSWORD = 'yszfhiivmvaqdnbk'
+EMAIL_HOST_USER = 'example123@gmail,com'
+EMAIL_HOST_PASSWORD = 'incorrect'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'Thoughts Share - Password Reset <noreply@anything3592.com>'
+DEFAULT_FROM_EMAIL = 'Thoughts Share - Password Reset <noreplyexample123.com>'
 
 
 
